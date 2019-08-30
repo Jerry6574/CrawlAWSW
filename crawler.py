@@ -4,6 +4,7 @@ import bs4
 import numpy as np
 import pandas as pd
 import utils
+import timeit
 
 
 def get_product_attrib(pn):
@@ -81,7 +82,7 @@ def parse_product_search_page(search_url):
 def get_prod_links(pn_path, prodlink_path):
     """
     get_n_product_attrib performs the get_product_attrib function on multiple inputs.
-    :param pn_path: path to Excel file contains country_code and part_number columns.
+    :param pn_path: path to Excel file contains part_number column.
     :param prodlink_path: Path to export an Excel file containing a table of product attributes.
     """
     pn_list = pd.read_excel(pn_path)["Part_Number"].tolist()
@@ -91,10 +92,15 @@ def get_prod_links(pn_path, prodlink_path):
 
 
 def main():
+    start = timeit.default_timer()
+
     pn_path = "pn.xlsx"
     prodlink_path = "prod_link.xlsx"
-
     get_prod_links(pn_path, prodlink_path)
+
+    stop = timeit.default_timer()
+
+    print('Time: ', stop - start, " seconds")
 
 
 if __name__ == '__main__':
