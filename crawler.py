@@ -85,7 +85,7 @@ def get_prod_links(pn_path, prodlink_path):
     :param pn_path: path to Excel file contains part_number column.
     :param prodlink_path: Path to export an Excel file containing a table of product attributes.
     """
-    pn_list = pd.read_excel(pn_path)["Part_Number"].tolist()
+    pn_list = pd.read_excel(pn_path)["WSW_PN"].tolist()
     n_product_attrib = utils.mp_func(get_product_attrib, pn_list, has_return=True)
     n_prod_attrib_df = pd.DataFrame(n_product_attrib, columns=['PN', 'Product Link'])
     n_prod_attrib_df.to_excel(prodlink_path)
