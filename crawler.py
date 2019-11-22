@@ -16,6 +16,8 @@ def get_product_attrib(pn):
 
     # Initialize product attributes.
     product_link = '#NA'
+    img_link = '#NA'
+    datasheet_link = "#NA"
 
     wsw_home_page = "http://www.assmann-wsw.com/"
     url_p2 = "&artnr-search=find+now#searchresults"
@@ -58,11 +60,13 @@ def get_product_attrib(pn):
 
     try:
         product_link = os.path.join(wsw_home_page, target_artnr.find('a')['href'])
+        img_link = os.path.join(wsw_home_page, target_artnr.previous_element['src'])
+        datasheet_link = os.path.join(wsw_home_page, target_artnr.find_next('td', {'class': 'icon middle'}))
 
     except (TypeError, UnboundLocalError, AttributeError):
         pass
 
-    product_attrib = np.array([pn, product_link])
+    product_attrib = np.array([pn, product_link, img_link, datasheet_link])
     return product_attrib
 
 
@@ -87,7 +91,7 @@ def get_prod_links(pn_path, prodlink_path):
     """
     pn_list = pd.read_excel(pn_path)["WSW_PN"].tolist()
     n_product_attrib = utils.mp_func(get_product_attrib, pn_list, has_return=True)
-    n_prod_attrib_df = pd.DataFrame(n_product_attrib, columns=['PN', 'Product Link'])
+    n_prod_attrib_df = pd.DataFrame(n_product_attrib, columns=['PN', 'Product Link', 'Image Link', "Datasheet"])
     n_prod_attrib_df.to_excel(prodlink_path)
 
 
