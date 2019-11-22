@@ -47,7 +47,7 @@ def get_product_attrib(pn):
             pass
 
     # Part number exists and is not a substring of other part numbers.
-    if len(all_artnr) == 2 or len(all_artnr) == 1:
+    if len(all_artnr) == 1:
         target_artnr = all_artnr[0]
 
     # Part number exists and is a substring of other part numbers.
@@ -59,9 +59,10 @@ def get_product_attrib(pn):
                 target_artnr = artnr
 
     try:
-        product_link = os.path.join(wsw_home_page, target_artnr.find('a')['href'])
-        img_link = os.path.join(wsw_home_page, target_artnr.previous_element['src'])
-        datasheet_link = os.path.join(wsw_home_page, target_artnr.find_next('td', {'class': 'icon middle'}))
+        product_link = wsw_home_page + target_artnr.find('a')['href']
+        img_link = wsw_home_page + target_artnr.previous_element['src']
+        datasheet_link = wsw_home_page + target_artnr.find_next('a', {'title': 'PDF download'})['href']
+        # print(datasheet_link)
 
     except (TypeError, UnboundLocalError, AttributeError):
         pass
