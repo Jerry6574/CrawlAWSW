@@ -97,18 +97,3 @@ def get_prod_links(pn_path, prodlink_path):
     n_prod_attrib_df = pd.DataFrame(n_product_attrib, columns=['PN', 'Product Link', 'Image Link', "Datasheet", "PCN"])
     n_prod_attrib_df.to_excel(prodlink_path)
 
-
-def main():
-    start = timeit.default_timer()
-
-    pn_path = "pn.xlsx"
-    prodlink_path = "prod_link.xlsx"
-    get_prod_links(pn_path, prodlink_path)
-
-    stop = timeit.default_timer()
-
-    print('Time: ', stop - start, " seconds")
-
-
-if __name__ == '__main__':
-    main()
